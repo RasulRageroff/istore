@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using istore;
-
-
-namespace istore
+﻿namespace istore
 {
     public interface IBookRepository
     {
@@ -14,6 +6,6 @@ namespace istore
         Book[] GetAllByIsbn(string isbn);
         Book[] GetAllByTitleOrAuthor(string titleorAuthor);
 
-
+        Book GetById(int id);
     }
 }

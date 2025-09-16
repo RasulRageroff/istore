@@ -9,10 +9,15 @@ namespace Store.Memory
 
         private readonly Book[] books = new[]
         {
-            new Book(1,"ISBN 12312-31231","D. Knuth", "Art of Programming"),
-            new Book(2,"ISBN 12312-31232","M. Fowler", "Refactoring"),
-            new Book(3,"ISBN 12312-31233","B. Kernighan, D. Ritchie", "C Programming Language"),
+            new Book(1,"ISBN 12312-31231","D. Knuth", "Art of Programming","мужчинская кнгига",7.19m),
+            new Book(2,"ISBN 12312-31232","M. Fowler", "Refactoring","хуета", 5.55m),
+            new Book(3,"ISBN 12312-31233","B. Kernighan, D. Ritchie", "C Programming Language","sorahanskiy", 13.37m),
         };
+
+        public Book GetById(int id)
+        {
+            return books.Single(book => book.Id == id);
+        }
 
         public Book[] GetAllByIsbn(string isbn)
         {
