@@ -10,6 +10,13 @@ namespace Store.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromMinutes(20);
+                option.Cookie.HttpOnly = true;
+                option.Cookie.IsEssential = true;
+            });
             builder.Services.AddSingleton<IBookRepository, BookRepository>();
             builder.Services.AddSingleton<BookService>();
             var app = builder.Build();
@@ -28,6 +35,8 @@ namespace Store.Web
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
