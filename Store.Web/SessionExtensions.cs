@@ -1,5 +1,6 @@
 ﻿using Store.Web.Models;
 using System.Text;
+using istore;
 
 namespace Store.Web
 {
@@ -14,15 +15,11 @@ namespace Store.Web
             using (var stream = new MemoryStream())
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
             {
-                writer.Write(value.Items.Count);
 
-                foreach (var item in value.Items)
-                {
-                    writer.Write(item.Key);
-                    writer.Write(item.Value);
-                }
+                writer.Write(value.OrderId);
+                writer.Write(value.TotalCount);
+                writer.Write(value.TotalPrice);
 
-                writer.Write(value.Amount);
 
                 session.Set(key, stream.ToArray());
 
@@ -37,18 +34,16 @@ namespace Store.Web
                 using (var stream = new MemoryStream(buffer))
                 using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
                 {
+                    var orderId = reader.ReadInt32();
+                    var totalCount = reader.ReadInt32();
+                    var totalPrice = reader.ReadDecimal();
 
-                    value = new Cart();
-
-                    var lenght = reader.ReadUInt32();
-                    for (int i = 0; i < lenght; i++)
+                    value = new Cart(orderId)
                     {
-                        var bookId = reader.ReadUInt32();
-                        var count = reader.ReadUInt32();
-
-                        value.Items.Add((int)bookId, (int)count);
-                    }
-                    value.Amount = reader.ReadDecimal();
+                        TotalCount = totalCount,
+                        TotalPrice = totalPrice,
+                    };
+                  
 
                     return true;
                 }
