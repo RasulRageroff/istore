@@ -14,9 +14,19 @@ namespace Store.Memory
             new Book(3,"ISBN 12312-31233","B. Kernighan, D. Ritchie", "C Programming Language","sorahanskiy", 13.37m),
         };
 
+
+        public Book[] GetAllByIds(IEnumerable<int> bookIds)
+        {
+            var foundBooks = from book in books
+                             join bookId in bookIds on book.Id equals bookId
+                             select book;
+            return foundBooks.ToArray();
+        }
+
+
         public Book GetById(int id)
         {
-            return books.Single(book => book.Id == id);
+            return books.Single(book => book.Id == id);  
         }
 
         public Book[] GetAllByIsbn(string isbn)
