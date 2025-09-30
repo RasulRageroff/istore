@@ -11,15 +11,25 @@ namespace istore
 
         public int BookId { get; }
 
-        public int Count { get; }
+        public int count;
 
+        public int Count
+        {
+            get { return count; }
+            set
+            {
+                ThrowifValidateCount(value);
+
+                count = value; 
+
+            }
+        }
+        
         public decimal Price { get; }
 
-        public OrderItem(int bookId, int count, decimal price) 
+        public OrderItem(int bookId, int count, decimal price)
         {
-            if (count <= 0)
-                throw new ArgumentException("Count must be greater than zero.");
-
+            ThrowifValidateCount(count);
 
             BookId = bookId;
             Count = count;
@@ -27,8 +37,10 @@ namespace istore
 
         }
 
-
-
-
+        private static void ThrowifValidateCount(int count)
+        {
+            if (count <= 0)
+                throw new ArgumentException("Count must be greater than zero.");
+        }
     }
 }

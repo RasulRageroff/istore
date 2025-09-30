@@ -41,5 +41,39 @@ namespace Store.test
 
            
         }
+        [Fact]
+
+        public void Count_WithNegativeValue_ThrowsArgumentOfRangeException()
+        {
+            var orderItem = new OrderItem(0, 5, 0m);
+            Assert.Throws<ArgumentException>(() =>
+            {
+                orderItem.Count = -1;
+            });
+        }
+
+        [Fact]
+
+        public void Count_WithZeroValue_ThrowsArgumentOfRangeException()
+        {
+            var orderItem = new OrderItem(0, 5, 0m);
+            Assert.Throws<ArgumentException>(() =>
+            {
+                orderItem.Count = 0;
+            });
+        }
+
+        [Fact]
+
+        public void Count_WithPozitiveValue_ThrowsArgumentOfRangeException()
+        {
+            var orderItem = new OrderItem(0, 5, 0m);
+
+            orderItem.Count = 10;
+
+            Assert.Equal(10, orderItem.Count);
+
+           
+        }
     }
 }
